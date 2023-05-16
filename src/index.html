@@ -13,10 +13,11 @@
     <link rel="stylesheet" href="./bootstrap.css" />
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="./script.js"></script>
+    <script src="./directive.js"></script>
   </head>
   <body ng-app="Todo" ng-controller="TodoCtrl">
     <div class="container">
-      <h1>Angular Todo List</h1>
+      <todo-title></todo-title>
       <!-- 데이터 추가 -->
       <form name="todoForm" ng-submit="add(newTodoTitle)">
         <div class="input-group mb-3">
@@ -43,26 +44,7 @@
       <!-- list 조회 -->
       <ul class="list-unstyled">
         <li ng-repeat="todo in todos | filter:statusFilter">
-          <div class="input-group mb-3">
-            <div class="input-group-text">
-              <input
-                class="form-check-input mt-0"
-                type="checkbox"
-                ng-model="todo.completed"
-              />
-            </div>
-
-            <input type="text" class="form-control" ng-model="todo.title" />
-            <button
-              ng-click="remove(todo)"
-              class="btn btn-danger"
-              type="button"
-              id="button-addon2"
-            >
-              삭제
-            </button>
-          </div>
-          <date>{{todo.createdAt|date:'yyyy-MM-dd:mm:ss'}}</date>
+          <todo-item></todo-item>
         </li>
       </ul>
       <button class="btn btn-primary" ng-click="statusFilter={completed:true}">

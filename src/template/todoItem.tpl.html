@@ -1,0 +1,20 @@
+<div class="input-group mb-3">
+  <div class="input-group-text">
+    <input
+      class="form-check-input mt-0"
+      type="checkbox"
+      ng-model="todo.completed"
+    />
+  </div>
+
+  <input type="text" class="form-control" ng-model="todo.title" />
+  <button
+    ng-click="remove(todo)"
+    class="btn btn-danger"
+    type="button"
+    id="button-addon2"
+  >
+    삭제
+  </button>
+</div>
+<date>{{todo.createdAt|date:'yyyy-MM-dd:mm:ss'}}</date>
