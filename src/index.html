@@ -12,34 +12,16 @@
     />
     <link rel="stylesheet" href="./bootstrap.css" />
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="./script.js"></script>
-    <script src="./directive.js"></script>
+    <script src="./app.js" defer></script>
+    <script src="./controller.js" defer></script>
+    <script src="./directive.js" defer></script>
   </head>
   <body ng-app="Todo" ng-controller="TodoCtrl">
     <div class="container">
       <todo-title></todo-title>
+
       <!-- 데이터 추가 -->
-      <form name="todoForm" ng-submit="add(newTodoTitle)">
-        <div class="input-group mb-3">
-          <input
-            type="text"
-            ng-model="newTodoTitle"
-            class="form-control"
-            placeholder="새로운 항목을 입력하세요"
-            autofocus
-            minlength="3"
-          />
-          <button type="submit" class="btn btn-success" id="button-addon2">
-            추가
-          </button>
-        </div>
-        <div ng-show="todoForm.$dirty && todoForm.$invalid">
-          <div class="alert alert-warning">3글자 이상 입력 해주세요</div>
-        </div>
-      </form>
-      <pre>
-        {{todoForm |json}}
-      </pre>
+      <todo-form></todo-form>
 
       <!-- list 조회 -->
       <ul class="list-unstyled">
@@ -47,13 +29,8 @@
           <todo-item></todo-item>
         </li>
       </ul>
-      <button class="btn btn-primary" ng-click="statusFilter={completed:true}">
-        Completed
-      </button>
-      <button class="btn btn-primary" ng-click="statusFilter={completed:false}">
-        Active
-      </button>
-      <button class="btn btn-primary" ng-click="statusFilter={}">All</button>
+
+      <todo-filters></todo-filters>
     </div>
   </body>
 </html>
