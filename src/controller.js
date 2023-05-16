@@ -3,6 +3,7 @@ angular.module('Todo').controller('TodoCtrl', function ($scope, todoStorage) {
 
   $scope.remove = function (todo) {
     todoStorage.remove(todo);
+    $scope.todos = todoStorage.get();
   };
 
   $scope.add = function (newTodoTitle) {
