@@ -25,8 +25,20 @@ angular.module('Todo').factory('todoStorage', () => {
     get: () => {
       return storage.todos;
     },
-    remove: () => {},
-    add: () => {},
+    remove: todo => {
+      storage.todos = storage.todos.filter(el => el.title !== todo.title);
+    },
+    add: newTodoTitle => {
+      if (storage.todos.filter(el => el.title === newTodoTitle).length) {
+        alert('이미 존재하는 항목입니다.');
+        return;
+      }
+      storage.todos.unshift({
+        title: newTodoTitle,
+        completed: false,
+        createdAt: Date.now(),
+      });
+    },
   };
   return storage;
 });
