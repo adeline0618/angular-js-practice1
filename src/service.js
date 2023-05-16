@@ -30,6 +30,9 @@ angular.module('Todo').factory('todoStorage', () => {
       });
       storage._saveToLocalStorage(storage.todos);
     },
+    update: () => {
+      storage._saveToLocalStorage(storage.todos);
+    },
   };
   return storage;
 });

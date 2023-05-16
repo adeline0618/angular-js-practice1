@@ -4,10 +4,16 @@
       class="form-check-input mt-0"
       type="checkbox"
       ng-model="todo.completed"
+      ng-click="update()"
     />
   </div>
 
-  <input type="text" class="form-control" ng-model="todo.title" />
+  <input
+    type="text"
+    class="form-control"
+    ng-change="update()"
+    ng-model="todo.title"
+  />
   <button
     ng-click="remove(todo)"
     class="btn btn-danger"
