@@ -17,6 +17,23 @@
   <body ng-app="Todo" ng-controller="TodoCtrl">
     <div class="container">
       <h1>Angular Todo List</h1>
+      <!-- 데이터 추가 -->
+      <form name="todoForm" ng-submit="add(newTodoTitle)">
+        <div class="input-group mb-3">
+          <input
+            type="text"
+            ng-model="newTodoTitle"
+            class="form-control"
+            placeholder="새로운 항목을 입력하세요"
+            autofocus
+          />
+          <button type="submit" class="btn btn-success" id="button-addon2">
+            추가
+          </button>
+        </div>
+      </form>
+
+      <!-- list 조회 -->
       <ul class="list-unstyled">
         <li ng-repeat="todo in todos | filter:statusFilter">
           <div class="input-group mb-3">
