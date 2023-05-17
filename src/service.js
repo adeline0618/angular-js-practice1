@@ -1,38 +1,68 @@
-angular.module('Todo').factory('todoStorage', () => {
-  const TODO_DATA = 'TODO_DATA';
-  const storage = {
-    todos: [],
+angular.module('Todo').factory('todoStorage', [
+  '$http',
+  function ($http) {
+    const storage = {
+      todos: [],
 
-    _saveToLocalStorage: data => {
-      localStorage.setItem(TODO_DATA, JSON.stringify(data));
-    },
-    _getFromLocalStorage: () => {
-      return JSON.parse(localStorage.getItem(TODO_DATA)) || [];
-    },
+      get: async function () {
+        try {
+          const response = await $http.get('http://localhost:8080/api/todo/');
+          const data = response.data;
+          storage.todos = [...data];
+          return storage.todos;
+        } catch (error) {
+          console.error('Error occurred while retrieving todos:', error);
+          throw error;
+        }
+      },
 
-    get: () => {
-      angular.copy(storage._getFromLocalStorage(), storage.todos);
-      return storage.todos;
-    },
-    remove: todo => {
-      storage.todos = storage.todos.filter(el => el.title !== todo.title);
-      storage._saveToLocalStorage(storage.todos);
-    },
-    add: newTodoTitle => {
-      if (storage.todos.filter(el => el.title === newTodoTitle).length) {
-        alert('이미 존재하는 항목입니다.');
-        return;
-      }
-      storage.todos.unshift({
-        title: newTodoTitle,
-        completed: false,
-        createdAt: Date.now(),
-      });
-      storage._saveToLocalStorage(storage.todos);
-    },
-    update: () => {
-      storage._saveToLocalStorage(storage.todos);
-    },
-  };
-  return storage;
-});
+      remove: async function (todo) {
+        try {
+          await $http.delete(`http://localhost:8080/api/todo/${todo.id}`);
+          storage.todos = storage.todos.filter(el => el.id !== todo.id);
+        } catch (error) {
+          console.error('Error occurred while removing todo:', error);
+          throw error;
+        }
+      },
+
+      add: async function (newtodo) {
+        try {
+          const response = await $http.post('http://localhost:8080/api/todo/', {
+            description: newtodo,
+            completed: false,
+          });
+          const createdTodo = response.data;
+          storage.todos.unshift(createdTodo);
+        } catch (error) {
+          console.error('Error occurred while adding todoß', error);
+          throw error;
+        }
+      },
+
+      update: async function (todo) {
+        if (!todo) {
+          console.error('Todo object is undefined.');
+          return;
+        }
+        console.log(todo);
+        try {
+          const response = await $http.put(
+            `http://localhost:8080/api/todo/${todo.id}`,
+            { description: todo.description, completed: todo.completed }
+          );
+          const updatedTodo = response.data;
+          const index = storage.todos.findIndex(el => el.id === updatedTodo.id);
+          if (index !== -1) {
+            storage.todos[index] = updatedTodo;
+          }
+        } catch (error) {
+          console.error('Error occurred while updating todo:', error);
+          throw error;
+        }
+      },
+    };
+
+    return storage;
+  },
+]);

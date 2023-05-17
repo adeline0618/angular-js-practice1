@@ -1,17 +1,44 @@
-angular.module('Todo').controller('TodoCtrl', function ($scope, todoStorage) {
-  $scope.todos = todoStorage.get();
+angular.module('Todo', []).controller('TodoCtrl', [
+  '$scope',
+  'todoStorage',
+  function ($scope, todoStorage) {
+    $scope.todos = [];
 
-  $scope.remove = function (todo) {
-    todoStorage.remove(todo);
-    $scope.todos = todoStorage.get();
-  };
+    todoStorage.get().then(function (todos) {
+      $scope.$apply(function () {
+        $scope.todos = todos;
+      });
+    });
 
-  $scope.add = function (newTodoTitle) {
-    $scope.newTodoTitle = '';
-    todoStorage.add(newTodoTitle);
-  };
+    $scope.remove = function (todo) {
+      todoStorage.remove(todo).then(function () {
+        todoStorage.get().then(function (todos) {
+          $scope.$apply(function () {
+            $scope.todos = todos;
+          });
+        });
+      });
+    };
 
-  $scope.update = function () {
-    todoStorage.update();
-  };
-});
+    $scope.add = function (todo) {
+      $scope.newTodoTitle = '';
+      todoStorage.add(todo).then(function () {
+        todoStorage.get().then(function (todos) {
+          $scope.$apply(function () {
+            $scope.todos = todos;
+          });
+        });
+      });
+    };
+
+    $scope.update = function (todo) {
+      todoStorage.update(todo).then(function () {
+        todoStorage.get().then(function (todos) {
+          $scope.$apply(function () {
+            $scope.todos = todos;
+          });
+        });
+      });
+    };
+  },
+]);

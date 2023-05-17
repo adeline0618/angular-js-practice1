@@ -5,33 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hellow Angular</title>
-    <script src="../node_modules/angular/angular.js"></script>
     <link
       rel="stylesheet"
       href="../node_modules/bootstrap/dist/css/bootstrap.min.css"
     />
     <link rel="stylesheet" href="./bootstrap.css" />
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="./app.js" defer></script>
-    <script src="./controller.js" defer></script>
-    <script src="./directive.js" defer></script>
-    <script src="./service.js" defer></script>
   </head>
   <body ng-app="Todo" ng-controller="TodoCtrl">
     <div class="container">
       <todo-title></todo-title>
 
-      <!-- 데이터 추가 -->
       <todo-form></todo-form>
 
-      <!-- list 조회 -->
       <ul class="list-unstyled">
         <li ng-repeat="todo in todos | filter:statusFilter">
-          <todo-item></todo-item>
+          <todo-item
+            todo="todo"
+            remove="remove(todo)"
+            update="update(todo)"
+          ></todo-item>
         </li>
       </ul>
 
       <todo-filters></todo-filters>
     </div>
+    <script src="../node_modules/angular/angular.js"></script>
+    <script src="./app.js" defer></script>
+    <script src="./controller.js" defer></script>
+    <script src="./directive.js" defer></script>
+    <script src="./service.js" defer></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
   </body>
 </html>

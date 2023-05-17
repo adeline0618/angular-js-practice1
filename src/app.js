@@ -1,3 +1,3 @@
 (function () {
-  const app = angular.module('Todo', []);
+  angular.module('Todo', []);
 })();

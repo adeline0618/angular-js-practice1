@@ -4,15 +4,15 @@
       class="form-check-input mt-0"
       type="checkbox"
       ng-model="todo.completed"
-      ng-click="update()"
+      ng-click="update(todo)"
     />
   </div>
 
   <input
+    readonly
     type="text"
     class="form-control"
-    ng-change="update()"
-    ng-model="todo.title"
+    ng-model="todo.description"
   />
   <button
     ng-click="remove(todo)"
@@ -23,4 +23,4 @@
     삭제
   </button>
 </div>
-<date>{{todo.createdAt|date:'yyyy-MM-dd:mm:ss'}}</date>
+<date>{{todo.createdDate|date:'yyyy-MM-dd:mm:ss'}}</date>
